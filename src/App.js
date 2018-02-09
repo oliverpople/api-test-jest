@@ -1,29 +1,29 @@
 import React, { Component } from 'react'
 import './App.css'
-import { getUser } from './api/github'
+import { getText } from './api/twitter'
 
-const renderLine = (user, key) => <li key={key}><b>{key}</b>: {user[key]}</li>
+const renderLine = (text, key) => <li key={key}><b>{key}</b>: {text[key]}</li>
 
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = { user: {} }
+    this.state = { text: {} }
   }
 
   componentDidMount () {
-    getUser('vnglst').then(data => {
-      this.setState({ user: data.entity })
+    getText('text').then(data => {
+      this.setState({ text: data.entity })
     })
   }
 
   render () {
-    const { user } = this.state
+    const { text } = this.state
     return (
       <div className='App'>
         <ul style={{ listStyle: 'none' }}>
           {
             // Loop over the object keys and render each key
-            Object.keys(user).map(key => renderLine(user, key))
+            Object.keys(text).map(key => renderLine(text, key))
           }
         </ul>
       </div>
