@@ -4,11 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var tweets = require('./routes/tweets');
 
 var app = express();
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +27,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+// enabling CORS. with node package (catch all)
+// app.use(cors())
+
+/*enabling cors with headers, (allow snode data to load from different port)*/
+app.use('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001/");
+  res.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/tweets', tweets);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

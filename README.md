@@ -1,3 +1,3 @@
-# api-test-jest-twitter
+# twitter-api-test
 
-This repo is an attempt to build a twitter API version of my other repo [here](https://github.com/oliverpople/api-test-jest).
+Me trying to work out how best to test API calls from express routes.

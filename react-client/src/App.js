@@ -1,34 +1,25 @@
-import React, { Component } from 'react'
-import './App.css'
-import { getText } from './api/twitter'
-
-const renderLine = (text, key) => <li key={key}><b>{key}</b>: {text[key]}</li>
+import React, { Component } from 'react';
+import './App.css';
 
 class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { text: {} }
+  state = {tweets: []}
+
+  componentDidMount() {
+    fetch('/tweets')
+      .then(res => res.json())
+      .then(tweets => this.setState({ tweets }));
   }
 
-  componentDidMount () {
-    getText('text').then(data => {
-      this.setState({ text: data.entity })
-    })
-  }
-
-  render () {
-    const { text } = this.state
+  render() {
     return (
-      <div className='App'>
-        <ul style={{ listStyle: 'none' }}>
-          {
-            // Loop over the object keys and render each key
-            Object.keys(text).map(key => renderLine(text, key))
-          }
-        </ul>
+      <div className="App">
+        <h1>Tweets</h1>
+        {this.state.tweets.map(tweet =>
+          <div key={tweet.id}>{tweet.text}</div>
+        )}
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;
