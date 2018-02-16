@@ -11,13 +11,12 @@ var client = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-router.get('/', function(req, res, next) {
-    // https://dev.twitter.com/rest/reference/get/statuses/user_timeline
+  router.get('/', function(req, res, next) {
+      // https://dev.twitter.com/rest/reference/get/statuses/user_timeline
     client.get('statuses/user_timeline', { screen_name: 'nodejs', count: 20 }, function(error, tweets, response) {
       if (!error) {
         res.send(tweets)
         console.log(tweets)
-        return tweets
       }
       else {
         res.status(500).json({ error: error });
